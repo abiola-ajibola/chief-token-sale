@@ -7,7 +7,7 @@ A Web3 contract that makes you able to purchase ERC20 tokens using a React front
 - Install dependencies
 
   ```shell
-      yarn install && cd client && yarn install
+  yarn install && cd client && yarn install
   ```
 
   This installs the dependencies for the smart contracts and the react frontend
