@@ -19,6 +19,7 @@
     "deploy": "npx hardhat run scripts/sample-script.js"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.5.0"
+    "@openzeppelin/contracts": "^4.5.0",
+    "react-router-dom": "^6.2.1"
   }
 }

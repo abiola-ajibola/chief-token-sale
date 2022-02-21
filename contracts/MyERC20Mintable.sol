@@ -28,4 +28,8 @@ contract MyERC20Mintable is ERC20, MinterRole {
         _mint(account, amount);
         return true;
     }
+
+    function decimals () public pure override returns(uint8){
+        return 2;
+    }
 }

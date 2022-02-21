@@ -4,6 +4,7 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
+const fs = require("fs").promises;
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -29,7 +30,7 @@ async function main() {
   });
 
   const mintedCrowdSale = await MintedCrowdSale.deploy(
-    100,
+    1,
     account,
     myMintableToken.address
   );
@@ -38,7 +39,23 @@ async function main() {
 
   // await greeter.deployed();
 
+  // Automatically add mintedCrowdSale as minter
+  await myMintableToken.addMinter(mintedCrowdSale.address);
+
   console.log("MintedCrowdsale deployed to:", mintedCrowdSale.address);
+  // Store the contract addresses in the asrtifacts folder.
+  // Artifacts are stored in client/src folder so that they will be easy to import into the client app
+  await fs.writeFile(
+    "./client/src/artifacts/contractAdresses.json",
+    JSON.stringify(
+      {
+        myTokenContractAddress: myMintableToken.address,
+        myCrowdsaleContractAdress: mintedCrowdSale.address,
+      },
+      null,
+      2
+    )
+  );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
