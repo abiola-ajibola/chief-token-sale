@@ -1,15 +1,36 @@
-# Basic Sample Hardhat Project
+# Minted Crowdsale
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+A Web3 contract that makes you able to purchase ERC20 tokens using a React frontend.
 
-Try running some of the following tasks:
+## How To Run Locally
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+- Install dependencies
+
+  ```shell
+  yarn install && cd client && yarn install
+  ```
+
+  This installs the dependencies for the smart contracts and the react frontend
+
+- Start react app
+
+  ```shell
+  cd client && yarn start
+  ```
+
+- To start a development blockchain node (using the built in node for hardhat)
+
+  ```shell
+  yarn start-node
+  ```
+
+- To compile the smart contracts
+
+  ```shell
+  yarn compile
+  ```
+
+- To deploy the smart contracts to the local node
+  ```shell
+  yarn deploy-local
+  ```

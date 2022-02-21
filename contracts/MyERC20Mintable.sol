@@ -10,7 +10,9 @@ import "./MinterRole.sol";
  *
  * At construction, the deployer of the contract is the only minter.
  */
-abstract contract ERC20Mintable is ERC20, MinterRole {
+contract MyERC20Mintable is ERC20, MinterRole {
+
+    constructor() ERC20("Chief Token", "CTK") {}
     /**
      * @dev See {ERC20-_mint}.
      *
@@ -25,5 +27,9 @@ abstract contract ERC20Mintable is ERC20, MinterRole {
     {
         _mint(account, amount);
         return true;
+    }
+
+    function decimals () public pure override returns(uint8){
+        return 2;
     }
 }

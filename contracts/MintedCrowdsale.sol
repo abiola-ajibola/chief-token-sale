@@ -2,14 +2,20 @@
 pragma solidity ^0.8.4;
 
 import "./Crowdsale.sol";
-import "./ERC20Mintable.sol";
+import "./MyERC20Mintable.sol";
 
 /**
  * @title MintedCrowdsale
  * @dev Extension of Crowdsale contract whose tokens are minted in each purchase.
  * Token ownership should be transferred to MintedCrowdsale for minting.
  */
-abstract contract MintedCrowdsale is Crowdsale {
+contract MintedCrowdsale is Crowdsale {
+    constructor(
+        uint256 rate_,
+        address payable wallet_,
+        IERC20 token_
+    ) Crowdsale(rate_, wallet_, token_) {}
+
     /**
      * @dev Overrides delivery by minting tokens upon purchase.
      * @param beneficiary Token purchaser
@@ -22,7 +28,7 @@ abstract contract MintedCrowdsale is Crowdsale {
         // Potentially dangerous assumption about the type of the token.
         require(
             // Let's hope this is the real token we intend to mint
-            ERC20Mintable(address(token())).mint(beneficiary, tokenAmount),
+            MyERC20Mintable(address(token())).mint(beneficiary, tokenAmount),
             "MintedCrowdsale: minting failed"
         );
     }
