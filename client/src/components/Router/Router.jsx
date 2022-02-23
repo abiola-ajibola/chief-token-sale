@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Admin from "../Admin/Admin";
 import Home from "../Home/Home";
 
-export default function MyRouter({ isMinter, currentUser, instances, signer }) {
+export default function MyRouter({ isMinter, signerAddress, instances, signer }) {
   const { myTokenContract, myCrowdsaleContract } = instances;
 
   return (
@@ -14,7 +14,7 @@ export default function MyRouter({ isMinter, currentUser, instances, signer }) {
           <>
             {isMinter ? (
               <Admin
-                currentUser={currentUser}
+                signerAddress={signerAddress}
                 myTokenContract={myTokenContract}
               />
             ) : (
@@ -28,7 +28,7 @@ export default function MyRouter({ isMinter, currentUser, instances, signer }) {
         path="/"
         element={
           <Home
-            currentUser={currentUser}
+            signerAddress={signerAddress}
             myTokenContract={myTokenContract}
             myCrowdsaleContract={myCrowdsaleContract}
             signer={signer}
