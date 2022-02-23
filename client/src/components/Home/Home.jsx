@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 export default function Home({
   myTokenContract,
   myCrowdsaleContract,
-  currentUser,
+  signerAddress,
   signer,
 }) {
   const [numberOfTokens, setNumberOfTokens] = useState("");
@@ -21,13 +21,13 @@ export default function Home({
   });
 
   useEffect(() => {
-    currentUser &&
-      myTokenContract.on("Transfer", async (...args) => {
+    signerAddress &&
+      myTokenContract.on("Transfer", async () => {
         /* eslint-disable no-console */
         let balance, totalSupply;
         try {
-          balance = currentUser
-            ? (await myTokenContract.balanceOf(currentUser)).toBigInt()
+          balance = signerAddress
+            ? (await myTokenContract.balanceOf(signerAddress)).toBigInt()
             : 0n;
         } catch (e) {
           console.error("getBalance:");
@@ -35,7 +35,7 @@ export default function Home({
         }
 
         try {
-          totalSupply = currentUser ? await myTokenContract.totalSupply() : 0n;
+          totalSupply = signerAddress ? await myTokenContract.totalSupply() : 0n;
         } catch (e) {
           console.error("getTotalSupply:");
           console.error(e);
@@ -50,7 +50,7 @@ export default function Home({
         const symbol = await myTokenContract.symbol();
         const name = await myTokenContract.name();
         const balance = (
-          await myTokenContract.balanceOf(currentUser)
+          await myTokenContract.balanceOf(signerAddress)
         ).toBigInt();
         const rateInWei = (await myCrowdsaleContract.rate()).toNumber();
         const decimals = await myTokenContract.decimals();
@@ -66,7 +66,7 @@ export default function Home({
         console.error(e);
       }
     })();
-  }, [currentUser]);
+  }, [signerAddress]);
 
   async function buyTokens(amount) {
     const amountBN = ethers.BigNumber.from(amount);
@@ -82,7 +82,6 @@ export default function Home({
     if (value === "e") _value = "";
     if (Number(value) < 0) _value = "";
     setNumberOfTokens(_value);
-    console.log({ _value, numberOfTokens });
   }
 
   return (

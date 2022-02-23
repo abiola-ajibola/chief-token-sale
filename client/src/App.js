@@ -11,7 +11,7 @@ import contractAddresses from "./artifacts/contractAdresses.json";
 import "./App.css";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState("");
+  const [signerAddress, setSignerAddress] = useState("");
   const [isMinter, setIsMinter] = useState(false);
   const myTokenAbi = myToken.abi;
   const myCrowdsaleAbi = myCrowdsale.abi;
@@ -36,17 +36,17 @@ function App() {
     provider
   );
   useEffect(() => {
-    // set the signer as currentUser
+    // set the signer as signerAddress
     (async () => {
-      setCurrentUser(await signer.getAddress());
+      setSignerAddress(await signer.getAddress());
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
-      currentUser && setIsMinter(await myTokenContract.isMinter(currentUser));
+      signerAddress && setIsMinter(await myTokenContract.isMinter(signerAddress));
     })();
-  }, [currentUser]);
+  }, [signerAddress]);
 
   const myTokenContract_signed = myTokenContract.connect(signer);
   const myCrowdsaleContract_signed = myCrowdsaleContract.connect(signer);
@@ -57,7 +57,7 @@ function App() {
         <NavBar isMinter={isMinter} />
         <MyRouter
           isMinter={isMinter}
-          currentUser={currentUser}
+          signerAddress={signerAddress}
           signer={signer}
           instances={{
             myCrowdsaleContract: myCrowdsaleContract_signed,

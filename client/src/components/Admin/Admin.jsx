@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Admin({ myTokenContract, currentUser }) {
+export default function Admin({ myTokenContract, signerAddress }) {
   const [minterAddress, setMinterAddress] = useState("");
   const [message, setMessage] = useState("");
   useEffect(() => {
